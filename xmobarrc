@@ -3,7 +3,9 @@ Config
     font = "xft:iosevka-11",
     bgColor = "#44475a",
     fgColor = "#f8f8f2",
-    position = Top L 100 24,
+    position = TopSize L 95 32,
+    lowerOnStart = True,
+    hideOnStart = False,
     commands =
       [ Run
           Cpu
@@ -46,10 +48,9 @@ Config
           50,
         Run Memory ["--template", "Mem: <usedratio>%"] 10,
         Run Date "%a %Y-%m-%d <fc=#8be9fd>%H:%M</fc>" "date" 10,
-        Run Com ".config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 20,
         Run UnsafeXMonadLog
       ],
     sepChar = "%",
     alignSep = "}{",
-    template = "%UnsafeXMonadLog% }{ %cpu% | %memory% | %battery% | %date% %trayerpad% "
+    template = "%UnsafeXMonadLog% }{ %cpu% | %memory% | %battery% | %date%"
   }

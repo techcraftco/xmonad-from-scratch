@@ -10,6 +10,7 @@ import XMonad.Layout.ThreeColumns
 import XMonad.Util.ClickableWorkspaces
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.Loggers
+import XMonad.Util.SpawnOnce (spawnOnce)
 
 main :: IO ()
 main =
@@ -35,7 +36,7 @@ myConfig =
     }
     `additionalKeysP` [ ("M-S-b", spawn myBrowser),
                         ("M-e e", spawn myEmacs),
-                        ("M-S-<Enter>", spawn "kitty")
+                        ("M-S-<Return>", spawn "kitty")
                       ]
 
 myLayout = tiled ||| Mirror tiled ||| Full ||| tcm
