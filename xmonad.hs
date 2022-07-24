@@ -5,8 +5,8 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
-import XMonad.Layout.ThreeColumns
 import XMonad.Layout.NoBorders
+import XMonad.Layout.ThreeColumns
 import XMonad.Util.ClickableWorkspaces
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.Loggers
