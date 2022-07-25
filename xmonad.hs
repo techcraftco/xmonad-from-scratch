@@ -11,14 +11,12 @@ import XMonad.Util.ClickableWorkspaces
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.Loggers
 import XMonad.Util.SpawnOnce (spawnOnce)
-import XMonad.Hooks.ManageDocks
 
 main :: IO ()
 main =
   xmonad
     . ewmhFullscreen
     . ewmh
-    . docks
     . withEasySB (statusBarProp "xmobar $HOME/.config/xmonad/xmobarrc" (pure myXmobarPP)) defToggleStrutsKey
     $ myConfig
 
@@ -34,15 +32,14 @@ myConfig =
   def
     { modMask = mod4Mask,
       layoutHook = smartBorders myLayout,
-      --startupHook = myStartupHook,
-      workspaces = myWorkspaces
+      workspaces = myWorkspaces,
+      focusedBorderColor = draculaGreen,
+      normalBorderColor = draculaComment
     }
     `additionalKeysP` [ ("M-S-b", spawn myBrowser),
                         ("M-e e", spawn myEmacs),
                         ("M-S-<Return>", spawn "kitty")
                       ]
-myStartupHook = do
-  spawnOnce "sleep 2; trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0xFF55FF --width 5 --height 30"
 
 myLayout = tiled ||| Mirror tiled ||| Full ||| tcm
   where
