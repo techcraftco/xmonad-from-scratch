@@ -3,7 +3,7 @@ Config
     font = "xft:iosevka-11",
     bgColor = "#44475a",
     fgColor = "#f8f8f2",
-    position = TopSize L 95 22,
+    position = TopSize L 95 30,
     lowerOnStart = True,
     hideOnStart = False,
     persistent = False,

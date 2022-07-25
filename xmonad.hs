@@ -30,8 +30,9 @@ myWorkspaceIndices = M.fromList $ zip myWorkspaces [1 ..]
 
 myConfig =
   def
-    { modMask = mod4Mask,
+    { modMask = mod1Mask,
       layoutHook = smartBorders myLayout,
+      manageHook = myManageHook,
       workspaces = myWorkspaces,
       focusedBorderColor = draculaGreen,
       normalBorderColor = draculaComment
@@ -47,6 +48,11 @@ myLayout = tiled ||| Mirror tiled ||| Full ||| tcm
     tcm = ThreeColMid 1 delta ratio
     delta = (3 / 100)
     ratio = (1 / 2)
+
+myManageHook =
+  composeAll
+    [ className =? "firefox" --> doShift (myWorkspaces !! 1)
+    ]
 
 myXmobarPP :: PP
 myXmobarPP =
