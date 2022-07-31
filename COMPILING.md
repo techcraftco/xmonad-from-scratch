@@ -2,7 +2,7 @@ The configuration in this repository assumes XMonad version 0.17.
 
 You may find that 0.17 is available in the package manager of your OS. For example, Arch and Fedora 36 both had 0.17 at the time of writing. However, many distros still have 0.15 (like Ubuntu and Raspberry Pi OS at the time of writing). 
 
-You can compile 0.17 yourself without too much trouble by following the instructions before
+You can compile 0.17 yourself without too much trouble by following the instructions below
 
 ## Ubuntu, Debian and Raspberry Pi OS
 
@@ -28,9 +28,9 @@ sudo apt install libncurses5 libnuma-dev llvm
 
 During compilation you may see some complaints about LLVM version - I haven't found these to be a problem. 
 
-On low-memory machines, compilation may fail with and out-of-memory error. You can simply restart until the compilation succeeds.
+On low-memory machines, compilation may fail with an out-of-memory error. You can simply restart as many times as needed until the compilation succeeds.
 
-On a Raspberry Pi expect this step to take _a few hours_ so make sure you do this with a stable power supply! It is safe to interrupt the upgrade with Ctrl-C. Running the command again picks up from where it last left off.
+On a Raspberry Pi expect this step to take _several_ hours so make sure you do this with a stable power supply! It is safe to interrupt the upgrade with Ctrl-C. Running the command again picks up from where it last left off.
 
 The upgraded Stack won't be on your `$PATH` - it's installed into `$HOME/.local/bin`. To add this to your `$PATH`:
 
@@ -38,7 +38,7 @@ The upgraded Stack won't be on your `$PATH` - it's installed into `$HOME/.local/
 export PATH=$HOME/.local/bin:$PATH
 ```
 
-To make this persist into new shells and across restarts, you'll want to the above line to your `.bashrc`, `.zshrc` or whatever is the correct configuration file for your shell.
+To make this persist into new shells and across restarts, you'll want to add the above line to your `.bashrc`, `.zshrc` or whatever is the correct configuration file for your shell.
 
 Check that you're getting the correct Stack with `which stack`
 
@@ -50,7 +50,7 @@ To get the XMonad source code first install Git:
 sudo apt install git
 ```
 
-We want our XMonad source code to be in the same directory as our XMonad config file: `$HOME/.config/xmonad`, create directory with:
+We want our XMonad source code to be in the same directory as our XMonad config file: `$HOME/.config/xmonad`, create this directory with:
 
 ```shell
 mkdir -p $HOME/.config/xmonad
@@ -82,3 +82,4 @@ stack init
 stack build
 ```
 
+This install `xmonad` into `$HOME/.local/bin`, you'll need to update `.xinitrc` to point to this `xmonad` binary rather than the one that comes in the system package.
