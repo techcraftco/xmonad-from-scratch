@@ -1,61 +1,50 @@
 Config
   { overrideRedirect = False,
     font = "xft:iosevka-11",
+    additionalFonts = [
+	"xft:Font Awesome 5 Free Solid:pixelsize=18",
+	"xft:Font Awesome 5 Brands:pixelsize=18",
+	"xft:JetBrainsMono:style:SemiBold:pixelsize=24"
+    ],
     bgColor = "#44475a",
     fgColor = "#f8f8f2",
     position = TopSize L 95 30,
     lowerOnStart = True,
     hideOnStart = False,
-    persistent = False,
+    persistent = True,
     allDesktops = True,
     pickBroadest = False,
     border = NoBorder,
     commands =
-      [ Run
-          Cpu
-          [ "-L",
-            "3",
-            "-H",
-            "50",
-            "--high",
-            "red",
-            "--normal",
-            "green"
-          ]
-          10,
-        -- battery monitor
-        Run
-          Battery
-          [ "--template",
-            "Batt: <acstatus>",
-            "--Low",
-            "10", -- units: %
-            "--High",
-            "80", -- units: %
-            "--low",
-            "darkred",
-            "--normal",
-            "darkorange",
-            "--high",
-            "green",
-            "--", -- battery specific options
-            -- discharging status
-            "-o",
-            "<left>% (<timeleft>)",
-            -- AC "on" status
-            "-O",
-            "<fc=#dAA520>Charging</fc>",
-            -- charged status
-            "-i",
-            "<fc=#006000>Charged</fc>"
-          ]
-          50,
-        Run Memory ["--template", "Mem: <usedratio>%"] 10,
-        Run Date "%a %Y-%m-%d <fc=#8be9fd>%H:%M</fc>" "date" 10,
-        Run Com ".config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 20,
+      [ 
+	Run Com "echo" ["<fn=1>\xf2db</fn>"] "icmicrochip" 3600,
+	Run Com "echo" ["<fn=1>\xf538</fn>"] "icmemory" 3600,
+	Run Com "echo" ["<fn=1>\xf0a0</fn>"] "ichdd" 3600,
+	Run Com "echo" ["<fn=1>\xf796</fn>"] "iceth" 3600,
+	Run Com "echo" ["<fn=2>\xf17c</fn>"] "penguin" 3600,
+	Run Com "echo" ["<fn=3>\xe0b2</fn>"] "nfsep" 3600,
+	Run Com "/home/rob/.config/xmonad/kernel.sh" [] "kernel" 3600, 
+	Run Memory ["-t", "<usedratio>%" ] 10,
+	Run Cpu ["-L", "3", "-H", "60", "-t", "<total>%"] 10,
+	Run DiskU [("/", "<usedp>%")] [] 10,
+	Run Network "enp0s5" ["-t", "<rx>KB|<tx>KB"] 10,
+	Run Date "%a, %_d %b %Y %H:%M:%S" "date" 10,
         Run UnsafeXMonadLog
       ],
     sepChar = "%",
     alignSep = "}{",
-    template = "%UnsafeXMonadLog% }{ %cpu% | %memory% | %battery% | %date% |"
+    template = "%UnsafeXMonadLog% }{ \
+	\<fc=#f1fa8c,#44475a:0>%nfsep%</fc>\
+	\<fc=#44475a,#f1fa8c:0>%penguin% %kernel% </fc>\
+	\<fc=#ff79c6,#f1fa8c:0>%nfsep%</fc>\
+	\<fc=#44475a,#ff79c6:0>\
+	\<action=`kitty htop`>%icmicrochip% %cpu% </action> \
+	\<action=`kitty htop`>%icmemory% %memory% </action> \
+	\<action=`kitty ncdu ~`>%ichdd% %disku% </action> \
+	\</fc>\
+	\<fc=#bd93f9,#ff79c6:0>%nfsep%</fc>\
+	\<fc=#44475a,#bd93f9:0><action=`kitty ip a`> %iceth% %enp0s5% </action></fc>\
+	\<fc=#50fa7b,#bd93f9:0>%nfsep%</fc>\
+	\<fc=#44475a,#50fa7b:0>%date% </fc>\
+	\<fc=#44475a,#50fa7b:0>%nfsep%</fc>"
   }
