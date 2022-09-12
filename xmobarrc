@@ -2,10 +2,10 @@ Config
   { overrideRedirect = False,
     font = "xft:iosevka-11",
     additionalFonts = [
-	"xft:Font Awesome 5 Free Solid:pixelsize=18",
-	"xft:Font Awesome 5 Brands:pixelsize=18",
-	"xft:JetBrainsMono:style:SemiBold:pixelsize=24"
-    ],
+	"xft:JetBrainsMono:style:SemiBold:pixelsize=24",
+	"xft:Font Awesome 5 Free Solid:pixelsize=18",	
+	"xft:Font Awesome 5 Brands:pixelsize=18"
+	],
     bgColor = "#44475a",
     fgColor = "#f8f8f2",
     position = TopSize L 95 30,
@@ -17,34 +17,34 @@ Config
     border = NoBorder,
     commands =
       [ 
-	Run Com "echo" ["<fn=1>\xf2db</fn>"] "icmicrochip" 3600,
-	Run Com "echo" ["<fn=1>\xf538</fn>"] "icmemory" 3600,
-	Run Com "echo" ["<fn=1>\xf0a0</fn>"] "ichdd" 3600,
-	Run Com "echo" ["<fn=1>\xf796</fn>"] "iceth" 3600,
-	Run Com "echo" ["<fn=2>\xf17c</fn>"] "penguin" 3600,
-	Run Com "echo" ["<fn=3>\xe0b2</fn>"] "nfsep" 3600,
+	Run Com "echo" ["<fn=1>\xe0b2</fn>"] "nfsep" 3600,
+	Run Com "echo" ["<fn=2>\xf2db</fn>"] "microchip" 3600,
+  	Run Com "echo" ["<fn=2>\xf538</fn>"] "icmemory" 3600,	
+	Run Com "echo" ["<fn=2>\xf0a0</fn>"] "ichdd" 3600,	
+	Run Com "echo" ["<fn=2>\xf796</fn>"] "iceth" 3600,	
+	Run Com "echo" ["<fn=3>\xf17c</fn>"] "penguin" 3600,	
 	Run Com "/home/rob/.config/xmonad/kernel.sh" [] "kernel" 3600, 
-	Run Memory ["-t", "<usedratio>%" ] 10,
-	Run Cpu ["-L", "3", "-H", "60", "-t", "<total>%"] 10,
-	Run DiskU [("/", "<usedp>%")] [] 10,
-	Run Network "enp0s5" ["-t", "<rx>KB|<tx>KB"] 10,
-	Run Date "%a, %_d %b %Y %H:%M:%S" "date" 10,
-        Run UnsafeXMonadLog
+        Run UnsafeXMonadLog,
+	Run Date "%a %d %b %Y %H:%M:%S" "date" 10,
+	Run Cpu ["-t", "<total>%", "-H", "50", "-h", "red"] 10,
+	Run Memory ["-t", "<used>Mb"] 10,
+	Run DiskU [("/", "<used>/<size>")] [] 10,
+	Run Network "enp0s5" [] 10
       ],
     sepChar = "%",
     alignSep = "}{",
     template = "%UnsafeXMonadLog% }{ \
-	\<fc=#f1fa8c,#44475a:0>%nfsep%</fc>\
-	\<fc=#44475a,#f1fa8c:0>%penguin% %kernel% </fc>\
-	\<fc=#ff79c6,#f1fa8c:0>%nfsep%</fc>\
-	\<fc=#44475a,#ff79c6:0>\
-	\<action=`kitty htop`>%icmicrochip% %cpu% </action> \
-	\<action=`kitty htop`>%icmemory% %memory% </action> \
-	\<action=`kitty ncdu ~`>%ichdd% %disku% </action> \
-	\</fc>\
-	\<fc=#bd93f9,#ff79c6:0>%nfsep%</fc>\
-	\<fc=#44475a,#bd93f9:0><action=`kitty ip a`> %iceth% %enp0s5% </action></fc>\
-	\<fc=#50fa7b,#bd93f9:0>%nfsep%</fc>\
-	\<fc=#44475a,#50fa7b:0>%date% </fc>\
-	\<fc=#44475a,#50fa7b:0>%nfsep%</fc>"
+	\<fc=#ff79c6,#44475a:0>%nfsep%</fc>\
+	\<fc=#44475a,#ff79c6:0>%penguin% %kernel%</fc>\
+	\<fc=#50fa7b,#ff79c6:0>%nfsep%</fc>\
+	\<action=`kitty htop`><fc=#44475a,#50fa7b:0>%microchip% %cpu%</fc></action>\
+	\<fc=#8be9fd,#50fa7b:0>%nfsep%</fc>\
+	\<fc=#44475a,#8be9fd:0>%icmemory% %memory%</fc>\
+	\<fc=#ffb86c,#8be9fd:0>%nfsep%</fc>\
+	\<fc=#44475a,#ffb86c:0>%ichdd% %disku%</fc>\
+	\<fc=#bd93f9,#ffb86c:0>%nfsep%</fc>\
+	\<fc=#44475a,#bd93f9:0>%iceth% %enp0s5%</fc>\
+	\<fc=#f1fa8c,#bd93f9:0>%nfsep%</fc>\
+	\<fc=#44475a,#f1fa8c:0>%date%</fc>\
+	\<fc=#44475a,#f1fa8c:0>%nfsep%</fc>"
   }
