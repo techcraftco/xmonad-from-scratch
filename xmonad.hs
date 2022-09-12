@@ -38,7 +38,7 @@ myConfig =
     { modMask = mod1Mask,
       layoutHook = smartBorders myLayout,
       manageHook = myManageHook <+> namedScratchpadManageHook scratchpads,
-      logHook = refocusLastLogHook >> nsHideOnFocusLoss scratchpads,
+      --logHook = refocusLastLogHook >> nsHideOnFocusLoss scratchpads,
       workspaces = myWorkspaces,
       focusedBorderColor = draculaGreen,
       normalBorderColor = draculaComment
@@ -47,7 +47,8 @@ myConfig =
                         ("M-e e", spawn myEmacs),
                         ("M-S-<Return>", spawn "kitty"),
                         ("M-S-h", namedScratchpadAction scratchpads "htop"),
-                        ("M-S-n", namedScratchpadAction scratchpads "org")
+                        ("M-S-n", namedScratchpadAction scratchpads "org"),
+                        ("M-S-m", namedScratchpadAction scratchpads "fastmail")
                       ]
 
 myLayout = tiled ||| Mirror tiled ||| Full ||| tcm
@@ -65,7 +66,8 @@ myManageHook =
 
 scratchpads =
   [ NS "htop" "kitty --class htop  htop" (className =? "htop") defaultFloating,
-    NS "org" "emacsclient --eval '(+org-capture/open-frame \"\" \"n\")'" (title =? "doom-capture") (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3))
+    NS "org" "emacsclient --eval '(+org-capture/open-frame \"\" \"n\")'" (title =? "doom-capture") (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3)),
+    NS "fastmail" "firefox --class fastmail -P fastmail fastmail.com" (className =? "fastmail") (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3))
   ]
 
 myXmobarPP :: PP
