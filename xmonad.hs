@@ -3,6 +3,7 @@ import Data.Maybe (fromJust)
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.RefocusLast (refocusLastLogHook)
 import XMonad.Hooks.StatusBar
 import XMonad.Hooks.StatusBar.PP
 import XMonad.Layout.NoBorders
@@ -10,14 +11,18 @@ import XMonad.Layout.ThreeColumns
 import XMonad.Util.ClickableWorkspaces
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.Loggers
+import XMonad.Util.NamedScratchpad
 import XMonad.Util.SpawnOnce (spawnOnce)
+import XMonad.Util.WorkspaceCompare
+
+import qualified XMonad.StackSet as W
 
 main :: IO ()
 main =
   xmonad
     . ewmhFullscreen
     . ewmh
-    . withEasySB (statusBarProp "xmobar $HOME/.config/xmonad/xmobarrc" (pure myXmobarPP)) defToggleStrutsKey
+    . withEasySB (statusBarProp "xmobar $HOME/.config/xmonad/xmobarrc" (pure (filterOutWsPP [scratchpadWorkspaceTag] myXmobarPP))) defToggleStrutsKey
     $ myConfig
 
 myBrowser = "firefox"
@@ -32,14 +37,17 @@ myConfig =
   def
     { modMask = mod1Mask,
       layoutHook = smartBorders myLayout,
-      manageHook = myManageHook,
+      manageHook = myManageHook <+> namedScratchpadManageHook scratchpads,
+      logHook = refocusLastLogHook >> nsHideOnFocusLoss scratchpads,
       workspaces = myWorkspaces,
       focusedBorderColor = draculaGreen,
       normalBorderColor = draculaComment
     }
     `additionalKeysP` [ ("M-S-b", spawn myBrowser),
                         ("M-e e", spawn myEmacs),
-                        ("M-S-<Return>", spawn "kitty")
+                        ("M-S-<Return>", spawn "kitty"),
+                        ("M-S-h", namedScratchpadAction scratchpads "htop"),
+                        ("M-S-n", namedScratchpadAction scratchpads "org")
                       ]
 
 myLayout = tiled ||| Mirror tiled ||| Full ||| tcm
@@ -51,8 +59,14 @@ myLayout = tiled ||| Mirror tiled ||| Full ||| tcm
 
 myManageHook =
   composeAll
-    [ className =? "firefox" --> doShift (myWorkspaces !! 1)
+    [ className =? "firefox" --> doShift (myWorkspaces !! 1),
+      className =? "Gimp" --> doFloat
     ]
+
+scratchpads =
+  [ NS "htop" "kitty --class htop  htop" (className =? "htop") defaultFloating,
+    NS "org" "emacsclient --eval '(+org-capture/open-frame \"\" \"n\")'" (title =? "doom-capture") (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3))
+  ]
 
 myXmobarPP :: PP
 myXmobarPP =
