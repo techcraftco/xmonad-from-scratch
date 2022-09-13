@@ -38,7 +38,7 @@ myConfig =
     { modMask = mod1Mask,
       layoutHook = smartBorders myLayout,
       manageHook = myManageHook <+> namedScratchpadManageHook scratchpads,
-      --logHook = refocusLastLogHook >> nsHideOnFocusLoss scratchpads,
+      logHook = refocusLastLogHook >> nsHideOnFocusLoss hideOnFocusLossSP,
       workspaces = myWorkspaces,
       focusedBorderColor = draculaGreen,
       normalBorderColor = draculaComment
@@ -69,6 +69,11 @@ scratchpads =
     NS "org" "emacsclient --eval '(+org-capture/open-frame \"\" \"n\")'" (title =? "doom-capture") (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3)),
     NS "fastmail" "firefox --class fastmail -P fastmail fastmail.com" (className =? "fastmail") (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3))
   ]
+
+hideOnFocusLossSP =
+  filter (\ns -> elem (name ns) hide) scratchpads
+  where
+    hide = ["htop"]
 
 myXmobarPP :: PP
 myXmobarPP =
