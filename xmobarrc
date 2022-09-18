@@ -37,7 +37,7 @@ Config
 	\<fc=#ff79c6,#44475a:0>%nfsep%</fc>\
 	\<fc=#44475a,#ff79c6:0>%penguin% %kernel%</fc>\
 	\<fc=#50fa7b,#ff79c6:0>%nfsep%</fc>\
-	\<action=`kitty htop`><fc=#44475a,#50fa7b:0>%microchip% %cpu%</fc></action>\
+	\<action=`xdotool key alt+shift+h`><fc=#44475a,#50fa7b:0>%microchip% %cpu%</fc></action>\
 	\<fc=#8be9fd,#50fa7b:0>%nfsep%</fc>\
 	\<fc=#44475a,#8be9fd:0>%icmemory% %memory%</fc>\
 	\<fc=#ffb86c,#8be9fd:0>%nfsep%</fc>\
